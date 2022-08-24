@@ -1,5 +1,8 @@
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:naad_parichay/screens/about.dart';
+import 'package:naad_parichay/screens/home.dart';
+import 'package:naad_parichay/screens/search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,17 +33,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late int currentIndex;
+  late int _currentIndex;
+
+  final List<Widget> _homeScreens = const [HomeScreen(), SearchScreen(), AboutScreen()];
 
   @override
   void initState() {
     super.initState();
-    currentIndex = 0;
+    _currentIndex = 0;
   }
 
-  void changePage(int? index) {
+  void _changePage(int? index) {
     setState(() {
-      currentIndex = index!;
+      _currentIndex = index!;
     });
   }
 
@@ -50,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container(),
+      body: _homeScreens[_currentIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
@@ -59,8 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BubbleBottomBar(
         hasNotch: true,
         fabLocation: BubbleBottomBarFabLocation.end,
-        currentIndex: currentIndex,
-        onTap: changePage,
+        currentIndex: _currentIndex,
+        onTap: _changePage,
         elevation: 8,
         tilesPadding: const EdgeInsets.symmetric(vertical: 8),
         opacity: 0.2,
