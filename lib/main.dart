@@ -1,3 +1,4 @@
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,6 +30,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late int currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = 0;
+  }
+
+  void changePage(int? index) {
+    setState(() {
+      currentIndex = index!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +54,52 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: BubbleBottomBar(
+        hasNotch: true,
+        fabLocation: BubbleBottomBarFabLocation.end,
+        currentIndex: currentIndex,
+        onTap: changePage,
+        elevation: 8,
+        tilesPadding: const EdgeInsets.symmetric(vertical: 8),
+        opacity: 0.2,
+        items: const <BubbleBottomBarItem>[
+          BubbleBottomBarItem(
+            backgroundColor: Colors.green,
+            icon: Icon(
+              Icons.dashboard,
+              color: Colors.black,
+            ),
+            activeIcon: Icon(
+              Icons.dashboard,
+              color: Colors.green,
+            ),
+            title: Text("Home"),
+          ),
+          BubbleBottomBarItem(
+              backgroundColor: Colors.red,
+              icon: Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.search,
+                color: Colors.red,
+              ),
+              title: Text("Search")),
+          BubbleBottomBarItem(
+              backgroundColor: Colors.deepPurpleAccent,
+              icon: Icon(
+                Icons.question_mark,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.question_mark,
+                color: Colors.deepPurpleAccent,
+              ),
+              title: Text("About")),
+        ],
       ),
     );
   }
